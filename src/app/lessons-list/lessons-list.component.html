@@ -17,6 +17,11 @@
             <i class="md-icon duration-icon">access_time</i>
             <span>{{lesson.duration}}</span>
         </td>
+        <td>
+            <button class="button button-highlight"
+                    (click)="delete(lesson)">X
+            </button>
+        </td>
     </tr>
     </tbody>
 </table>

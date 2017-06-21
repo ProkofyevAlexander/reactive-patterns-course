@@ -33,11 +33,15 @@ export class LessonsListComponent implements IObserver {
 
     notify(data: ILesson[]) {
         console.log('LessonsListComponent received data ...');
-        this.lessons = data;
+        this.lessons = data.slice(0);
     }
 
     toggleLessonViewed(lesson: ILesson) {
         console.log('toggling lesson ...');
         lesson.completed = !lesson.completed;
+    }
+
+    delete(lesson: ILesson) {
+        this.lessons.splice(this.lessons.indexOf(lesson), 1);
     }
 }
