@@ -1,47 +1,32 @@
-import { Component } from '@angular/core';
-
-import {
-    ADD_NEW_LESSON,
-    globalEventBus,
-    IObserver,
-    LESSONS_LIST_AVAILABLE
-} from '../event-bus-experiments/event-bus';
+import { Component, OnInit } from '@angular/core';
 import { ILesson } from '../shared/model/lesson';
+
+import { IObserver, store } from '../event-bus-experiments/app-data';
 
 @Component({
     selector: 'lessons-list',
     templateUrl: './lessons-list.component.html',
     styleUrls: ['./lessons-list.component.css']
 })
-export class LessonsListComponent implements IObserver {
+export class LessonsListComponent implements IObserver, OnInit {
 
     public lessons: ILesson[] = [];
 
-    constructor() {
-        console.log('LessonsListComponent is registered as observer ...');
-        globalEventBus.registerObserver(LESSONS_LIST_AVAILABLE, this);
-
-        globalEventBus.registerObserver(ADD_NEW_LESSON, {
-            notify: lessonText => {
-                this.lessons.push({
-                    id: Math.random(),
-                    description: lessonText
-                })
-            }
-        } );
+    ngOnInit() {
+        store.lessonsList$.subscribe(this);
     }
 
-    notify(data: ILesson[]) {
+    next(data: ILesson[]) {
         console.log('LessonsListComponent received data ...');
-        this.lessons = data.slice(0);
+        this.lessons = data;
     }
 
     toggleLessonViewed(lesson: ILesson) {
         console.log('toggling lesson ...');
-        lesson.completed = !lesson.completed;
+        store.toggleLessonViewed(lesson);
     }
 
     delete(lesson: ILesson) {
-        this.lessons.splice(this.lessons.indexOf(lesson), 1);
+        store.deleteLesson(lesson);
     }
 }
