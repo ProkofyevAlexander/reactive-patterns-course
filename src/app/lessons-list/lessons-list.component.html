@@ -4,6 +4,7 @@
         <td class="viewed">
             <label>
                 <input type="checkbox"
+                       [checked]="lesson.completed"
                        (click)="toggleLessonViewed(lesson)">
             </label>
         </td>

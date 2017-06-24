@@ -13,7 +13,7 @@ export class LessonsListComponent implements IObserver, OnInit {
     public lessons: ILesson[] = [];
 
     ngOnInit() {
-        store.lessonsList$.subscribe(this);
+        store.subscribe(this);
     }
 
     next(data: ILesson[]) {

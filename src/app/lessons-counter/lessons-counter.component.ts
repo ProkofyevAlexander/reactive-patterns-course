@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ILesson } from '../shared/model/lesson';
 import { IObserver, store } from '../event-bus-experiments/app-data';
 
@@ -7,14 +7,13 @@ import { IObserver, store } from '../event-bus-experiments/app-data';
     templateUrl: './lessons-counter.component.html',
     styleUrls: ['./lessons-counter.component.css']
 })
-export class LessonsCounterComponent implements IObserver {
+export class LessonsCounterComponent implements IObserver, OnInit {
 
     lessonsCounter = 0;
 
-    constructor() {
+    ngOnInit(): void {
         console.log('LessonsCounterComponent is registered as observer ...');
-
-        store.lessonsList$.subscribe(this);
+        store.subscribe(this);
     }
 
     next(data: ILesson[]) {
