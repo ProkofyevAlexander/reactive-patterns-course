@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 
-import { Observer } from 'rxjs/Observer';
-
 import { ILesson } from '../shared/model/lesson';
 import { store } from '../event-bus-experiments/app-data';
 
@@ -10,25 +8,17 @@ import { store } from '../event-bus-experiments/app-data';
     templateUrl: './lessons-list.component.html',
     styleUrls: ['./lessons-list.component.css']
 })
-export class LessonsListComponent implements Observer<ILesson[]>, OnInit {
+export class LessonsListComponent implements OnInit {
 
     public lessons: ILesson[] = [];
 
     ngOnInit() {
-        store.lessonsList$.subscribe(this);
+        store.lessonsList$.subscribe((data) => this.next(data));
     }
 
     next(data: ILesson[]) {
         console.log('LessonsListComponent received data ...');
         this.lessons = data;
-    }
-
-    error(err: any) {
-        console.error(err);
-    }
-
-    complete() {
-        console.log('completed');
     }
 
     toggleLessonViewed(lesson: ILesson) {
